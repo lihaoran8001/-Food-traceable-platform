@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.landing.dao.UserDao">
+
+	<!-- 通过userName查询用户 -->
+	<select resultType="com.landing.entity.User"
+		parameterType="String" id="findByUserName">
+		select * from userinfo where userName =#{userName}
+	</select>
+
+	<!-- 插入一个用户 -->
+	<!-- 数据库中id字段是自增的，故无需插入；state字段默认值为'offline'，即用户离线 -->
+	<insert parameterType="com.landing.entity.User"
+		id="insertOneUser">
+		insert into userinfo (`userName`, `password`,
+		`country`,`province`,`urban`,`address`,
+		`phoneNumber`,`email`,`product`,`introduction`,`privateKey`,`publicKey`,`state`,`ip`)
+		values
+		(#{userName},#{password},#{country},#{province},#{urban},#{address},#{phoneNumber},#{email},'','','','','offline','')
+	</insert>
+
+	<!-- 登录后更新数据库内ip和state -->
+	<update parameterType="com.landing.entity.User" id="loginUpdate">
+		update userinfo
+		set
+		state = 'online',ip = #{ip}
+		where id=#{id}
+	</update>
+
+	<!-- 选取所有的用户信息,用于service选取相邻用户 -->
+	<select id="getAllUserInfo" resultType="com.landing.entity.User">
+		select* from userinfo
+	</select>
+
+	<!-- 更改用户密码 -->
+	<update parameterType="com.landing.entity.User"
+		id="changePassword">
+		update userinfo
+		set
+		password=#{password}
+		where userName=#{userName}
+	</update>
+
+	<!-- 更改用户信息 -->
+	<update parameterType="com.landing.entity.User" id="changeInfo">
+		update userinfo
+		set
+		country=#{country}, province=#{province}, urban=#{urban},
+		address=#{address}, phoneNumber=#{phoneNumber}, email=#{email},
+		product=#{product}, introduction=#{introduction}
+		where userName=#{userName}
+	</update>
+
+	<!-- 插入keypair -->
+	<update parameterType="com.landing.entity.User"
+		id="updateKeyPair">
+		update userinfo
+		set
+		privateKey=#{privateKey},
+		publicKey=#{publicKey}
+		where userName=#{userName}
+	</update>
+
+	<!-- 通过email查询用户 -->
+	<select resultType="com.landing.entity.User"
+		parameterType="String" id="findByMail">
+		select * from userinfo where email =#{email}
+	</select>
+
+</mapper>

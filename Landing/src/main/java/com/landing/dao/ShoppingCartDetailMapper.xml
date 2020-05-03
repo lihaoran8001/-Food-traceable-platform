@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.landing.dao.shoppingCartDetailDao">
+
+	
+
+	<!-- 插入一个用户 -->
+	<!-- 数据库中shoppingCartDetailID字段是自增的，故无需插入-->
+	<insert parameterType="com.landing.entity.ShoppingCartDetail"
+		id="insertDetail">
+		insert into shoppingcartdetail (`userID`, `ISBN`, `quantity`)
+		values
+		(#{userID},#{ISBN},#{quantity})
+	</insert>
+
+	<!-- 通过查询用户 -->
+	<delete parameterType="Integer" id="deleteDetail">
+		delete * from shoppingcartdetail where shoppingCartDetail =#{shoppingCartDetail}
+	</delete>
+
+</mapper>

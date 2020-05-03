@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.landing.dao.bookDao">
+
+	<!-- 通过ISBN查询书籍 -->
+	<select resultType="com.landing.entity.Book"
+		parameterType="String" id="findByISBN">
+		select * from book where ISBN =#{ISBN}
+	</select>
+	
+	<!-- 通过书名查询书籍 -->
+	<select resultType="com.landing.entity.Book"
+		parameterType="String" id="findByBookName">
+		select * from book where bookName =#{bookName}
+	</select>
+	
+	<!-- 通过作者查询书籍 -->
+	<select resultType="com.landing.entity.Book"
+		parameterType="String" id="findByAuthor">
+		select * from book where author =#{author}
+	</select>
+	
+	<!-- 通过出版社查询书籍 -->
+	<select resultType="com.landing.entity.Book"
+		parameterType="String" id="findByPublisher">
+		select * from book where publisher =#{publisher}
+	</select>
+	
+	<!-- 通过分类查询书籍 -->
+	<select resultType="com.landing.entity.Book"
+		parameterType="String" id="findByCategory">
+		select * from book where category =#{category}
+	</select>
+
+	<!-- 插入书籍一个用户 -->
+	<!-- 数据库中bookID字段是自增的，故无需插入 -->
+	<insert parameterType="com.landing.entity.Book"
+		id="insertBook">
+		insert into book (`bookName`, `author`, `price`, `publisher`, 
+		`publishTime`, `inventory`, `category`, `bookInfo`, `imagePath`, `IBSN`)
+		values
+		(#{bookName},#{author},#{price},#{publisher},#{publishTime},#{inventory},
+		#{category},#{bookInfo},#{imagePath},#{IBSN})
+	</insert>
+
+	<!-- 通过bookID更新书籍信息 -->
+	<update parameterType="com.landing.entity.Book" id="updateBookInfo">
+		update book
+		set
+		bookName=#{bookName}, author=#{author}, price=#{price}, publisher=#{publisher},
+		publishTime=#{publishTime}, inventory=#{inventory}, category=#{category},
+		bookInfo=#{bookInfo}, imagePath=#{imagePath}, IBSN=#{IBSN} 
+		where bookID=#{bookID}
+	</update>
+	
+	<!-- 通过bookID删除书籍 -->
+	<delete parameterType="Integer" id="deleteBookInfo">
+		delete * from book where bookID =#{bookID}
+	</delete>
+</mapper>

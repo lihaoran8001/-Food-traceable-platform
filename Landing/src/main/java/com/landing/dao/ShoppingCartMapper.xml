@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.landing.dao.shoppingCartDao">
+
+	<!-- 通过userID查询购物车信息 -->
+	<select resultType="com.landing.entity.ShoppingCart"
+		parameterType="Integer" id="findByUserID">
+		select * from shoppingcart where userID =#{userID}
+	</select>
+
+	<!-- 加入书籍至购物车时更新购物车信息 -->
+	<update parameterType="com.landing.entity.ShoppingCart" id="updateShoppingCart">
+		update shoppingcart
+		set
+		quantity = #{quantity},totalPrice = #{totalPrice}
+		where userID=#{userID}
+	</update>
+	
+</mapper>
